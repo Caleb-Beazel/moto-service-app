@@ -42,8 +42,8 @@ class Service(db.Model):
     service_name = db.Column(db.String, nullable = False)
     service_period = db.Column(db.Integer, nullable = False)
     period_count = db.Column(db.Integer, nullable = False, default = 0)
-    period_units = db.Column(db.Integer, nullable = False)
-    past_services = db.Column()
+    period_units = db.Column(db.String, nullable = False)
+    
 
     def __repr__(self):
         return f"{self.service_name} -- Next Service: {self.service}"
@@ -51,6 +51,15 @@ class Service(db.Model):
     def next_service(self):
         return self.service_period - self.period_count
     
+class Occurence(db.Model):
+    #logs past services so that this info need not be added to the service table
+    __tablename_ = "service_occurences"
+
+    occurence_id = db.Column(db.Integer, autoincrement = True, primary_key = True)
+    service_id = db.Column(db.Integer, db.ForeignKey("services.service_id"), nullable = False)
+    use_val = db.Column(db.Integer, db.ForeignKey("vehicles.use_val"), nullable = False)
+    use_unit = db.Column(db.String, db.ForeignKey("vehicles.use_unit"), nullable = False)
+    date_of_service = db.Column(db.String, nullable = False)
 
 
 def connect_to_db(flask_app, db_uri=os.environ["POSTGRES_URI"], echo=False):

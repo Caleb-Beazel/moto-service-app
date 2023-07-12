@@ -1,5 +1,6 @@
 import os
 from flask_sqlalchemy import SQLAlchemy
+from datetime import datetime
 
 db = SQLAlchemy()
 
@@ -8,7 +9,7 @@ class User(db.Model):
     __tablename__ = "users"
 
     user_id = db.Column(db.Integer, autoincrement = True, primary_key = True)
-    user_name = db.Column(db.String(255), unique = True)
+    username = db.Column(db.String(255), unique = True)
     email = db.Column(db.String(255), unique = True)
     password = db.Column(db.String(255))
 
@@ -53,13 +54,13 @@ class Service(db.Model):
     
 class Occurence(db.Model):
     #logs past services so that this info need not be added to the service table
-    __tablename_ = "service_occurences"
+    __tablename__ = "service_occurences"
 
     occurence_id = db.Column(db.Integer, autoincrement = True, primary_key = True)
     service_id = db.Column(db.Integer, db.ForeignKey("services.service_id"), nullable = False)
-    use_val = db.Column(db.Integer, db.ForeignKey("vehicles.use_val"), nullable = False)
-    use_unit = db.Column(db.String, db.ForeignKey("vehicles.use_unit"), nullable = False)
-    date_of_service = db.Column(db.String, nullable = False)
+    use_at_service = db.Column(db.Integer, nullable = False)
+    use_unit_at_service = db.Column(db.String, nullable = False)
+    date_of_service = db.Column(db.DateTime, nullable = False, default = datetime.now())
 
 
 def connect_to_db(flask_app, db_uri=os.environ["POSTGRES_URI"], echo=False):

@@ -1,0 +1,35 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+    <link rel="stylesheet" href="../static/styles.css">
+    <title>
+      {% block title %}{% endblock %}
+    </title>
+
+    {% block head %}{% endblock %}
+  </head>
+  <body>
+    <header>
+        <!-- <nav>
+            <button class="nav-buttons">
+                <a href="">Vehicles</a>
+              </button>
+              <button class="nav-buttons">
+                <a href="">Services</a>
+              </button>
+        </nav> -->
+    </header>
+
+    {% for msg in get_flashed_messages() %}
+    <p class="flash-msg">
+      {{ msg }}
+    </p>
+  {% endfor %}
+  
+    {% block body %}{% endblock %}
+
+    {% block after_body %}{% endblock %}
+  </body>
+</html>

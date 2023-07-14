@@ -3,16 +3,16 @@ import json
 from datetime import datetime
 
 import crud
-import model
+from model import db, connect_to_db
 import server
 
 os.system("dropdb vehicle-services")
 os.system("createdb vehicle-services")
 
-model.connect_to_db(server.app)
+connect_to_db(server.app)
 
 with server.app.app_context():
-    model.db.create_all()
+    db.create_all()
 
     with open('data/users.json') as u:
         user_data = json.loads(u.read())
@@ -28,8 +28,8 @@ with server.app.app_context():
         
         users_to_database.append(db_user)
 
-    model.db.session.add_all(users_to_database)
-    model.db.session.commit()
+    db.session.add_all(users_to_database)
+    db.session.commit()
 
 
     with open('data/vehicles.json') as v:
@@ -52,8 +52,8 @@ with server.app.app_context():
         
         vehicles_to_database.append(db_vehicle)
 
-    model.db.session.add_all(vehicles_to_database)
-    model.db.session.commit()
+    db.session.add_all(vehicles_to_database)
+    db.session.commit()
 
     with open('data/services.json') as s:
         service_data = json.loads(s.read())
@@ -72,8 +72,8 @@ with server.app.app_context():
 
         services_to_database.append(db_service)
 
-    model.db.session.add_all(services_to_database)
-    model.db.session.commit()
+    db.session.add_all(services_to_database)
+    db.session.commit()
     
     with open('data/occurences.json') as o:
         occurence_data = json.loads(o.read())
@@ -87,9 +87,9 @@ with server.app.app_context():
             occurence["date_of_service"]
         )
 
-        db_occurence = crud.create_occurence(vehicle_id, service_name, service_period, period_count, period_units)
+        db_occurence = crud.create_occurence(service_id, use_at_service, use_unit_at_service, date_of_service)
 
         occurences_to_database.append(db_occurence)
 
-    model.db.session.add_all(occurences_to_database)
-    model.db.session.commit()
+    db.session.add_all(occurences_to_database)
+    db.session.commit()

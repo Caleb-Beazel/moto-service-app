@@ -1,21 +1,25 @@
 import os
 from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime, date
+from flask_login import UserMixin
 
 db = SQLAlchemy()
 
-class User(db.Model):
+class User(db.Model, UserMixin):
 
     __tablename__ = "users"
 
     user_id = db.Column(db.Integer, autoincrement = True, primary_key = True)
-    username = db.Column(db.String(255), unique = True)
-    email = db.Column(db.String(255), unique = True)
-    password = db.Column(db.String(255))
+    username = db.Column(db.String(255), unique = True, nullable = False )
+    email = db.Column(db.String(255), unique = True, nullable = False)
+    password = db.Column(db.String(255), nullable = False)
 
     def __repr__(self):
         return f"{self.user_name} | ID = {self.user_id} | Email = {self.email}"
 
+    def get_id(self):
+        return self.user_id
+    
 class Vehicle(db.Model):
 
     __tablename__ = "vehicles"

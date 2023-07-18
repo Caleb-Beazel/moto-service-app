@@ -6,3 +6,9 @@ class LoginForm(FlaskForm):
     username = StringField('Username: ', [validators.InputRequired()])
     password = PasswordField('Password: ', [validators.InputRequired()])
     submit = SubmitField("Login")
+
+class CreateAccount(FlaskForm):
+    username = StringField("Username: ", [validators.InputRequired()])
+    email = StringField("Email: ", [validators.InputRequired()])
+    password = PasswordField("Password: ", [validators.InputRequired()])
+    submit = SubmitField("Create Account")

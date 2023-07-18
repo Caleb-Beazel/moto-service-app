@@ -3,7 +3,7 @@ from model import connect_to_db, db, User, Vehicle, Service, Occurence
 from jinja2 import StrictUndefined
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import LoginManager, login_required, UserMixin, login_manager,login_user, logout_user, current_user
-from forms import LoginForm
+from forms import LoginForm, CreateAccount
 import crud
 
 
@@ -21,7 +21,29 @@ def load_user(user_id):
 @app.route("/")
 def homepage():
     login_form = LoginForm()
-    return render_template("homepage.html", login_form=login_form)
+    new_account_form = CreateAccount()
+    return render_template("homepage.html", login_form=login_form, new_account_form=new_account_form)
+
+@app.route("/new-account", methods=["POST"])
+def new_account():
+    new_account_form = CreateAccount()
+    username = new_account_form.username.data
+    email = new_account_form.email.data
+    password = new_account_form.password.data
+
+    existing_username = User.query.filter_by(username=username).first()
+    existing_email = User.query.filter_by(email=email).first()
+
+    if existing_username:
+        flash(f"An account with the username {username} already exists in our system. Please try another.")
+    elif existing_email:
+        flash(f"We already have an account on file for {email}.")
+    else:
+        user = crud.create_user(username, email, password)
+        db.session.add(user)
+        db.session.commit()
+        flash("Account created! Please log in to begin.")
+    return redirect("/")
 
 @app.route("/login", methods=["POST"])
 def process_login():

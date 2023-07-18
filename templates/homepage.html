@@ -14,4 +14,18 @@
       {{ login_form.submit(class="btn btn-primary mt-3") }}
     </form>
   </div>
+  
+  <div class="w-50">
+    <h1>Create An Account</h1>
+    <form action="{{ url_for('new_account') }}" method="POST">
+      {{ new_account_form.csrf_token() }}
+      {{ new_account_form.username.label(class="form-label") }} 
+      {{ new_account_form.username(class="form-control") }}
+      {{ new_account_form.email.label(class="form-label") }} 
+      {{ new_account_form.email(class="form-control") }}
+      {{ new_account_form.password.label(class="form-label") }} 
+      {{ new_account_form.password(class="form-control") }}
+      {{ new_account_form.submit(class="btn btn-primary mt-3") }}
+    </form>
+  </div>
 {% endblock %}

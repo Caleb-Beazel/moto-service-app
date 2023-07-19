@@ -4,6 +4,7 @@
 
 {% block body %}
     <h2>Your Vehicles</h2>
+    <div id="vehicle-row">
     {% for vehicle in current_user.vehicles %}
         <div class="vehicle-card">
 
@@ -15,5 +16,17 @@
         <br>
         <br>
     {% endfor %}
+    </div>
 
+    <h2>Upcoming Services</h2>
+    {% for service in user_services %}
+        <div class="service-card">
+            <p> {{ service.service_name }} </p>
+            <p> For: {{ service.vehicles.year }} {{ service.vehicles.make }} {{ service.vehicles.model }}  </p>
+            <p>Service Interval: {{ service.service_period }} {{ service.period_units }} </p>
+            <p>Since Last Service: {{ service.period_count }} {{service.period_units}} </p>
+        </div>
+        <br>
+        <br>
+    {% endfor %}
 {% endblock %}

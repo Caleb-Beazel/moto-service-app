@@ -20,7 +20,8 @@ class User(db.Model, UserMixin):
     def get_id(self):
         return self.user_id
     
-    vehicles = db.relationship("Vehicle", backref = "users", lazy = True)
+    vehicles = db.relationship("Vehicle", backref = "users", lazy = 'dynamic')
+    
     
 class Vehicle(db.Model):
 
@@ -40,7 +41,7 @@ class Vehicle(db.Model):
     def __repr__(self):
         return f"{self.year} {self.make} {self.model} ::: {self.use_val} {self.use_unit} ::: User ID: {self.user_id}"
     
-    services = db.relationship("Service", backref = "vehicles", lazy = True)
+    services = db.relationship("Service", backref = "vehicles", lazy = 'dynamic')
     
 class Service(db.Model):
 
@@ -60,7 +61,7 @@ class Service(db.Model):
     def next_service(self):
         return self.service_period - self.period_count
     
-    occurences = db.relationship("Occurence", backref = "services", lazy = True)
+    occurences = db.relationship("Occurence", backref = "services", lazy = 'dynamic')
 
 class Occurence(db.Model):
     #logs past services so that this info need not be added to the service table

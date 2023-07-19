@@ -22,6 +22,7 @@ def load_user(user_id):
 def homepage():
     login_form = LoginForm()
     new_account_form = CreateAccount()
+    
     return render_template("homepage.html", login_form=login_form, new_account_form=new_account_form)
 
 @app.route("/new-account", methods=["POST"])
@@ -69,8 +70,10 @@ def logout():
 @app.route("/user-home")
 @login_required
 def user_home():
+
+    user_services = Service.query.join(Vehicle).filter(Vehicle.user_id == current_user.user_id).all()
     
-    return render_template("user_home.html")
+    return render_template("user_home.html", user_services=user_services)
 
 if __name__ == "__main__":
     connect_to_db(app)

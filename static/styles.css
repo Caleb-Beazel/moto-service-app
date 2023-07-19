@@ -1,0 +1,14 @@
+.vehicle-image{
+    width: 200px;
+}
+
+.vehicle-card{
+    display: flex;
+    flex-direction: column;
+    padding-top: 25px;
+    border: solid black 1px;
+    width: 250px;
+    align-items: center;
+    
+    
+}

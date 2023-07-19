@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+
+{% block title %}User Home for {{current_user.username}} {% endblock %}
+
+{% block body %}
+    <h2>Your Vehicles</h2>
+    {% for vehicle in current_user.vehicles %}
+        <div class="vehicle-card">
+
+            <img src=" {{vehicle.vehicle_image_link}} " class="vehicle-image">
+            <p>Make: {{ vehicle.make }} </p>
+            <p>Model: {{ vehicle.model }} </p>
+            <p>Year: {{ vehicle.year }} </p>
+        </div>
+        <br>
+        <br>
+    {% endfor %}
+
+{% endblock %}

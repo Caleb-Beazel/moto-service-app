@@ -59,12 +59,18 @@ def process_login():
     else:
         login_user(user)
         flash(f"Welcome back, {user.username}!")
-        return redirect(url_for("homepage"))
+        return redirect(url_for("user_home"))
     
 @app.route("/logout")
 def logout():
     logout_user()
     return redirect(url_for("homepage"))
+
+@app.route("/user-home")
+@login_required
+def user_home():
+    
+    return render_template("user_home.html")
 
 if __name__ == "__main__":
     connect_to_db(app)

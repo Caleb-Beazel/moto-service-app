@@ -72,8 +72,14 @@ def logout():
 def user_home():
 
     user_services = Service.query.join(Vehicle).filter(Vehicle.user_id == current_user.user_id).all()
-    
-    return render_template("user_home.html", user_services=user_services)
+
+    sorted_user_services = sorted(user_services, key = lambda x: (x.period_count / x.service_period), reverse=True)
+
+    return render_template("user_home.html", user_services=sorted_user_services)
+
+# @app.route("/user-home/<vehicle_id>")
+# @login_required
+
 
 if __name__ == "__main__":
     connect_to_db(app)

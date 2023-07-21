@@ -14,9 +14,11 @@ app.jinja_env.undefined = StrictUndefined
 login_manager = LoginManager()
 login_manager.init_app(app)
 
+
 @login_manager.user_loader
 def load_user(user_id):
     return User.query.get(user_id)
+
 
 @app.route("/")
 def homepage():
@@ -24,6 +26,7 @@ def homepage():
     new_account_form = CreateAccount()
     
     return render_template("homepage.html", login_form=login_form, new_account_form=new_account_form)
+
 
 @app.route("/new-account", methods=["POST"])
 def new_account():
@@ -46,6 +49,7 @@ def new_account():
         flash("Account created! Please log in to begin.")
     return redirect("/")
 
+
 @app.route("/login", methods=["POST"])
 def process_login():
     login_form = LoginForm()
@@ -61,11 +65,13 @@ def process_login():
         login_user(user)
         flash(f"Welcome back, {user.username}!")
         return redirect(url_for("user_home"))
-    
+
+
 @app.route("/logout")
 def logout():
     logout_user()
     return redirect(url_for("homepage"))
+
 
 @app.route("/user-home")
 @login_required
@@ -77,8 +83,21 @@ def user_home():
 
     return render_template("user_home.html", user_services=sorted_user_services)
 
-# @app.route("/user-home/<vehicle_id>")
-# @login_required
+
+@app.route("/user-home/vehicles/<vehicle_id>")
+@login_required
+def vehicle_details(vehicle_id):
+    vehicle = Vehicle.query.get(vehicle_id)
+    return render_template("vehicle_details.html", vehicle_id=vehicle_id, vehicle=vehicle)
+
+
+@app.route("/user-home/services/<service_id>")
+@login_required
+def service_details(service_id):
+    service = Service.query.get(service_id)
+    vehicle = Vehicle.query.get(service.vehicle_id)
+    
+    return render_template("service_details.html", service_id=service_id, service=service, vehicle=vehicle)
 
 
 if __name__ == "__main__":

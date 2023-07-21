@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% block title %}{{ vehicle.year }} {{ vehicle.make }} {{ vehicle.model }}{% endblock %}
+
+{% block body %}
+<div id="v-d-organizer">
+    <div class="vehicle-details">
+    
+            <img src=" {{vehicle.vehicle_image_link}} " class="vehicle-details-image">
+            <p>Make: {{ vehicle.make }} </p>
+            <p>Model: {{ vehicle.model }} </p>
+            <p>Year: {{ vehicle.year }} </p>
+            <p>Vin: {{ vehicle.vin }} </p>
+            <p>Total Use: {{ vehicle.use_val }} {{vehicle.use_unit}}</p>
+            <p>Notes: {{vehicle.vehicle_notes}} </p>
+    </div>
+</div>
+{% endblock %}

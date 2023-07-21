@@ -26,8 +26,29 @@ h1, h2, h3, h4, h5{
     
 }
 
-.vehicle-image{
+.vehicle-card-image{
     width: 200px;
+}
+
+#v-d-organizer{
+    display: flex;
+    align-items: center;
+    align-content: center;
+}
+
+.vehicle-details{
+    display: flexbox;
+    padding-top: 50px;
+    color: rgb(0, 221, 255);
+    width:500px;
+    align-items: center;
+    justify-content: center;
+    margin: 20px;
+    text-decoration: none;
+}
+
+.vehicle-details-image{
+    width: 500px;
 }
 
 #vehicle-row{
@@ -35,13 +56,20 @@ h1, h2, h3, h4, h5{
     flex-direction: row;
     background-color: rgb(38, 38, 38);
 }
-/* #vehicle-row a{
-    text-decoration: none;
-    color: rgb(0, 221, 255)!;
-} */
+
 .service-card{
     color: azure;
     border: solid white 1px;
     width: 250px;
     justify-content: center;
+}
+#service-link{
+    text-decoration: none;
+    color: azure;
+}
+
+.service-details{
+    color: azure;
+    padding-left: 50px;
+    padding-top: 25px;
 }

@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 
-{% block title %}User Home for {{current_user.username}} {% endblock %}
+{% block title %}User Home - {{current_user.username}} {% endblock %}
 
 {% block body %}
 
@@ -9,7 +9,7 @@
     {% for vehicle in current_user.vehicles %}
     <div class="vehicle-card">
         <a href="user-home/vehicles/{{vehicle.vehicle_id}}">
-            <img src=" {{vehicle.vehicle_image_link}} " class="vehicle-image">
+            <img src=" {{vehicle.vehicle_image_link}} " class="vehicle-card-image">
         </a>
             <p>Make: {{ vehicle.make }} </p>
             <p>Model: {{ vehicle.model }} </p>
@@ -23,8 +23,8 @@
     <h2>Upcoming Services</h2>
     {% for service in user_services %}
         <div class="service-card">
-            <a href="user-home/services/{{service.service_id}} ">
-                <p> <strong>{{ service.service_name }}</strong> </p>
+            <a href="user-home/services/{{service.service_id}} " id="service-link">
+                <p id="service-link"> <strong>{{ service.service_name }}</strong> </p>
             </a>
             <p> For: {{ service.vehicles.year }} {{ service.vehicles.make }} {{ service.vehicles.model }}  </p>
             <p>Service Interval: {{ service.service_period }} {{ service.period_units }} </p>

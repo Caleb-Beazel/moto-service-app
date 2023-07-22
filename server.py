@@ -95,9 +95,9 @@ def vehicle_details(vehicle_id):
 @login_required
 def service_details(service_id):
     service = Service.query.get(service_id)
-    vehicle = Vehicle.query.get(service.vehicle_id)
+    # vehicle = Vehicle.query.get(service.vehicle_id)
     
-    return render_template("service_details.html", service_id=service_id, service=service, vehicle=vehicle)
+    return render_template("service_details.html", service_id=service_id, service=service)
 
 
 if __name__ == "__main__":

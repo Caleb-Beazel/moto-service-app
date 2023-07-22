@@ -3,24 +3,28 @@
         "service_id" : 1,
         "use_at_service" : 15,
         "use_unit_at_service" : "hours",
-        "date_of_service" : "2023-05-16"
+        "date_of_service" : "2023-05-16",
+        "occurence_notes" : "These are notes."
     },
     {
         "service_id" : 2,
         "use_at_service" : 1983,
         "use_unit_at_service" : "hours",
-        "date_of_service" : "2023-01-07"
+        "date_of_service" : "2023-01-07",
+        "occurence_notes" : "These are notes."
     },
     {
         "service_id" : 3,
         "use_at_service" : 26,
         "use_unit_at_service" : "hours",
-        "date_of_service" : "2023-04-11"
+        "date_of_service" : "2023-04-11",
+        "occurence_notes" : "These are notes."
     },
     {
         "service_id" : 4,
         "use_at_service" : 243,
         "use_unit_at_service" : "hours",
-        "date_of_service" : "2023-07-01"
+        "date_of_service" : "2023-07-01",
+        "occurence_notes" : "These are notes."
     }
 ]

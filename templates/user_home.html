@@ -26,7 +26,7 @@
             <a href="user-home/services/{{service.service_id}} " id="service-link">
                 <p id="service-link"> <strong>{{ service.service_name }}</strong> </p>
             </a>
-            <p> For: {{ service.vehicles.year }} {{ service.vehicles.make }} {{ service.vehicles.model }}  </p>
+            <p> For: {{ service.vehicle.year }} {{ service.vehicle.make }} {{ service.vehicle.model }}  </p>
             <p>Service Interval: {{ service.service_period }} {{ service.period_units }} </p>
             <p>Since Last Service: {{ service.period_count }} {{service.period_units}} </p>
             

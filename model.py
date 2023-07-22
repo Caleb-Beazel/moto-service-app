@@ -41,7 +41,7 @@ class Vehicle(db.Model):
     def __repr__(self):
         return f"{self.year} {self.make} {self.model} ::: {self.use_val} {self.use_unit} ::: User ID: {self.user_id}"
     
-    services = db.relationship("Service", backref = "vehicles", lazy = 'dynamic')
+    services = db.relationship("Service", backref = "vehicle", lazy = 'dynamic')
     
 class Service(db.Model):
 
@@ -53,6 +53,7 @@ class Service(db.Model):
     service_period = db.Column(db.Integer, nullable = False)
     period_count = db.Column(db.Integer, nullable = False, default = 0)
     period_units = db.Column(db.String, nullable = False)
+    service_notes = db.Column(db.String)
     
 
     def __repr__(self):
@@ -72,6 +73,7 @@ class Occurence(db.Model):
     use_at_service = db.Column(db.Integer, nullable = False)
     use_unit_at_service = db.Column(db.String, nullable = False)
     date_of_service = db.Column(db.DateTime, nullable = False, default = date.today())
+    occurence_notes = db.Column(db.String)
 
 
 def connect_to_db(flask_app, db_uri=os.environ["POSTGRES_URI"], echo=False):

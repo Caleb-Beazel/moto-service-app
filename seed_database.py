@@ -60,15 +60,16 @@ with server.app.app_context():
 
     services_to_database = []
     for service in service_data:
-        vehicle_id, service_name, service_period, period_count, period_units = (
+        vehicle_id, service_name, service_period, period_count, period_units, service_notes = (
             service["vehicle_id"],
             service["service_name"],
             service["service_period"],
             service["period_count"],
-            service["period_units"]
+            service["period_units"],
+            service["service_notes"]
         )
 
-        db_service = crud.create_service(vehicle_id, service_name, service_period, period_count, period_units)
+        db_service = crud.create_service(vehicle_id, service_name, service_period, period_count, period_units, service_notes)
 
         services_to_database.append(db_service)
 
@@ -80,14 +81,15 @@ with server.app.app_context():
 
     occurences_to_database = []
     for occurence in occurence_data:
-        service_id, use_at_service, use_unit_at_service, date_of_service = (
+        service_id, use_at_service, use_unit_at_service, date_of_service, occurence_notes = (
             occurence["service_id"],
             occurence["use_at_service"],
             occurence["use_unit_at_service"],
-            occurence["date_of_service"]
+            occurence["date_of_service"],
+            occurence["occurence_notes"]
         )
 
-        db_occurence = crud.create_occurence(service_id, use_at_service, use_unit_at_service, date_of_service)
+        db_occurence = crud.create_occurence(service_id, use_at_service, use_unit_at_service, date_of_service, occurence_notes)
 
         occurences_to_database.append(db_occurence)
 

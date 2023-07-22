@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+{% block title %}Add a Vehicle{% endblock %}
+
+{% block body %}
+<div class="w-50">
+    <h1>Add a Vehicle</h1>
+    <form action="{{ url_for('create_new_vehicle') }}" method="POST">
+        {{ new_vehicle.csrf_token() }}
+        {{ new_vehicle.vin.label(class="form-label") }} 
+        {{ new_vehicle.vin(class="form-control") }}
+        {{ new_vehicle.make.label(class="form-label") }} 
+        {{ new_vehicle.make(class="form-control") }}
+        {{ new_vehicle.model.label(class="form-label") }} 
+        {{ new_vehicle.model(class="form-control") }}
+        {{ new_vehicle.year.label(class="form-label") }} 
+        {{ new_vehicle.year(class="form-control") }}
+        {{ new_vehicle.use_val.label(class="form-label") }} 
+        {{ new_vehicle.use_val(class="form-control") }}
+        {{ new_vehicle.use_unit.label(class="form-label") }} 
+        {{ new_vehicle.use_unit(class="form-control") }}
+        {{ new_vehicle.vehicle_notes.label(class="form-label") }} 
+        {{ new_vehicle.vehicle_notes(class="form-control") }}
+        {{ new_vehicle.vehicle_image_link.label(class="form-label") }} 
+        {{ new_vehicle.vehicle_image_link(class="form-control") }}
+        
+        {{ new_vehicle.submit(class="btn btn-primary mt-3 form-button") }}
+    </form>
+  </div>
+{% endblock %}

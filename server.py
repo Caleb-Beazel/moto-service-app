@@ -3,7 +3,7 @@ from model import connect_to_db, db, User, Vehicle, Service, Occurence
 from jinja2 import StrictUndefined
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import LoginManager, login_required, UserMixin, login_manager,login_user, logout_user, current_user
-from forms import LoginForm, CreateAccount
+from forms import LoginForm, CreateAccount, AddVehicle
 import crud
 
 
@@ -19,6 +19,7 @@ login_manager.init_app(app)
 def load_user(user_id):
     return User.query.get(user_id)
 
+# User Login endpoints
 
 @app.route("/")
 def homepage():
@@ -72,6 +73,7 @@ def logout():
     logout_user()
     return redirect(url_for("homepage"))
 
+# Main user interface page
 
 @app.route("/user-home")
 @login_required
@@ -83,6 +85,40 @@ def user_home():
 
     return render_template("user_home.html", user_services=sorted_user_services)
 
+# Vehicle Endpoints
+
+# Create Vehicle Page
+@app.route("/user-home/vehicles/add")
+@login_required
+def new_vehicle_form():
+    new_vehicle = AddVehicle()
+    return render_template("vehicle_new.html", new_vehicle=new_vehicle)
+
+# Create a Vehicle
+@app.route("/user-home/vehicles/add/new-vehicle", methods=["POST"])
+@login_required
+def create_new_vehicle():
+    new_vehicle = AddVehicle()
+
+    user_id = current_user.user_id
+    vin = new_vehicle.vin.data
+    make = new_vehicle.make.data
+    model = new_vehicle.model.data
+    year = new_vehicle.year.data
+    use_val = new_vehicle.use_val.data
+    use_unit = new_vehicle.use_unit.data
+    vehicle_notes = new_vehicle.vehicle_notes.data
+    vehicle_image_link = new_vehicle.vehicle_image_link.data
+
+
+    vehicle = crud.create_vehicle(user_id, vin, make, model, year, use_val, use_unit, vehicle_notes, vehicle_image_link)
+
+    db.session.add(vehicle)
+    db.session.commit()
+    flash(f"A {year} {make} {model} has been added to your account.")
+
+    return redirect("/user-home")
+    
 
 @app.route("/user-home/vehicles/<vehicle_id>")
 @login_required
@@ -90,6 +126,7 @@ def vehicle_details(vehicle_id):
     vehicle = Vehicle.query.get(vehicle_id)
     return render_template("vehicle_details.html", vehicle_id=vehicle_id, vehicle=vehicle)
 
+# Service Endpoints
 
 @app.route("/user-home/services/<service_id>")
 @login_required

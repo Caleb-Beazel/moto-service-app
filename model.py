@@ -29,7 +29,7 @@ class Vehicle(db.Model):
 
     vehicle_id = db.Column(db.Integer, autoincrement = True, primary_key = True)
     user_id = db.Column(db.Integer, db.ForeignKey("users.user_id"), nullable = False)
-    vin = db.Column(db.String, unique = True, nullable = False)
+    vin = db.Column(db.String, unique=True, nullable = False)
     make = db.Column(db.String(255), nullable = False)
     model = db.Column(db.String(255), nullable = False)
     year = db.Column(db.Integer, nullable = False)

@@ -3,7 +3,7 @@ from model import connect_to_db, db, User, Vehicle, Service, Occurence
 from jinja2 import StrictUndefined
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import LoginManager, login_required, UserMixin, login_manager,login_user, logout_user, current_user
-from forms import LoginForm, CreateAccount, AddVehicle
+from forms import LoginForm, CreateAccount, AddVehicle, EditVehicle
 import crud
 
 
@@ -119,6 +119,39 @@ def create_new_vehicle():
 
     return redirect("/user-home")
     
+
+
+@app.route("/user-home/vehicles/<vehicle_id>/edit", methods=["GET", "UPDATE"])
+@login_required
+def edit_vehicle(vehicle_id):
+    vehicle = Vehicle.query.get(vehicle_id)
+    edit_vehicle = EditVehicle(obj=vehicle)
+
+    return render_template("vehicle_edit.html", edit_vehicle=edit_vehicle, vehicle=vehicle)
+
+
+@app.route("/user-home/vehicles/<vehicle_id>/edit/submit", methods=["GET", "POST"])
+@login_required
+def submit_edit_vehicle(vehicle_id):
+    vehicle_to_update = Vehicle.query.get(vehicle_id)
+    vehicle_updates = EditVehicle()
+
+    vehicle_to_update.vin = vehicle_updates.vin.data
+    vehicle_to_update.make = vehicle_updates.make.data
+    vehicle_to_update.model = vehicle_updates.model.data
+    vehicle_to_update.year = vehicle_updates.year.data
+    vehicle_to_update.use_val = vehicle_updates.use_val.data
+    vehicle_to_update.use_unit = vehicle_updates.use_unit.data
+    vehicle_to_update.vehicle_notes = vehicle_updates.vehicle_notes.data
+    vehicle_to_update.vehicle_image_link = vehicle_updates.vehicle_image_link.data
+
+    db.session.commit()
+
+    flash("Your vehicle has been updated.")
+
+    return redirect(f"/user-home/vehicles/{vehicle_id}")
+
+
 
 @app.route("/user-home/vehicles/<vehicle_id>")
 @login_required

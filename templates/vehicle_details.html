@@ -10,10 +10,12 @@
             <p>Model: {{ vehicle.model }} </p>
             <p>Year: {{ vehicle.year }} </p>
             <p>Vin: {{ vehicle.vin }} </p>
-            <p>Total Use: {{ vehicle.use_val }} {{vehicle.use_unit}}</p>
-            <p>Notes: {{vehicle.vehicle_notes}} </p>
+            <p>Total Use: {{ vehicle.use_val }} {{ vehicle.use_unit }}</p>
+            <p>Notes: {{ vehicle.vehicle_notes }} </p>
     </div>
 </div>
 
-
+<a href="/user-home/vehicles/{{vehicle_id}}/edit">
+    <button class="btn btn-primary mt-3 form-button">Edit Vehicle</button>
+</a>
 {% endblock %}

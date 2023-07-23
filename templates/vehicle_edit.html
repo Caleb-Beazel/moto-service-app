@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+{% block title %}Edit a Vehicle{% endblock %}
+
+{% block body %}
+<div class="w-50">
+    <h1>Edits for {{vehicle.year}} {{vehicle.make}} {{vehicle.model}} </h1>
+    <form action="{{ url_for('submit_edit_vehicle', vehicle_id= vehicle.vehicle_id ) }}" method="POST">
+        {{ edit_vehicle.csrf_token() }}
+        {{ edit_vehicle.vin.label(class="form-label") }} 
+        {{ edit_vehicle.vin(class="form-control") }}
+        {{ edit_vehicle.make.label(class="form-label") }} 
+        {{ edit_vehicle.make(class="form-control") }}
+        {{ edit_vehicle.model.label(class="form-label") }} 
+        {{ edit_vehicle.model(class="form-control") }}
+        {{ edit_vehicle.year.label(class="form-label") }} 
+        {{ edit_vehicle.year(class="form-control") }}
+        {{ edit_vehicle.use_val.label(class="form-label") }} 
+        {{ edit_vehicle.use_val(class="form-control") }}
+        {{ edit_vehicle.use_unit.label(class="form-label") }} 
+        {{ edit_vehicle.use_unit(class="form-control") }}
+        {{ edit_vehicle.vehicle_notes.label(class="form-label") }} 
+        {{ edit_vehicle.vehicle_notes(class="form-control") }}
+        {{ edit_vehicle.vehicle_image_link.label(class="form-label") }} 
+        {{ edit_vehicle.vehicle_image_link(class="form-control") }}        
+        {{ edit_vehicle.submit(class="btn btn-primary mt-3 form-button") }}
+    </form>
+</div>
+
+{% endblock %}

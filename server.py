@@ -152,12 +152,35 @@ def submit_edit_vehicle(vehicle_id):
     return redirect(f"/user-home/vehicles/{vehicle_id}")
 
 
-
 @app.route("/user-home/vehicles/<vehicle_id>")
 @login_required
 def vehicle_details(vehicle_id):
     vehicle = Vehicle.query.get(vehicle_id)
     return render_template("vehicle_details.html", vehicle_id=vehicle_id, vehicle=vehicle)
+
+
+@app.route("/user-home/vehicles/<vehicle_id>/delete")
+@login_required
+def delete_vehicle(vehicle_id):
+    vehicle = Vehicle.query.get(vehicle_id)
+    services = Service.query.filter(Service.vehicle_id == vehicle_id).all()
+    for service in services:
+        occurences = Occurence.query.filter(Occurence.service_id == service.service_id).all()
+        
+        for occurence in occurences:
+            db.session.delete(occurence)
+        
+        db.session.delete(service)
+    db.session.delete(vehicle)
+
+    db.session.commit()
+
+    flash("Your vehicle and it's associated services have been deleted.")
+
+    return redirect("/user-home")
+
+
+
 
 # Service Endpoints
 
@@ -165,7 +188,6 @@ def vehicle_details(vehicle_id):
 @login_required
 def service_details(service_id):
     service = Service.query.get(service_id)
-    # vehicle = Vehicle.query.get(service.vehicle_id)
     
     return render_template("service_details.html", service_id=service_id, service=service)
 

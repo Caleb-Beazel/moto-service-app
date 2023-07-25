@@ -3,7 +3,7 @@ from model import connect_to_db, db, User, Vehicle, Service, Occurence
 from jinja2 import StrictUndefined
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import LoginManager, login_required, UserMixin, login_manager,login_user, logout_user, current_user
-from forms import LoginForm, CreateAccount, AddVehicle, EditVehicle
+from forms import LoginForm, CreateAccount, AddVehicle, EditVehicle, AddService
 import crud
 
 
@@ -19,7 +19,7 @@ login_manager.init_app(app)
 def load_user(user_id):
     return User.query.get(user_id)
 
-# User Login endpoints
+# ------ User Endpoints -------
 
 @app.route("/")
 def homepage():
@@ -85,7 +85,7 @@ def user_home():
 
     return render_template("user_home.html", user_services=sorted_user_services)
 
-# Vehicle Endpoints
+# ---- Vehicle Endpoints -----
 
 # Create Vehicle Page
 @app.route("/user-home/vehicles/add")
@@ -120,7 +120,7 @@ def create_new_vehicle():
     return redirect("/user-home")
     
 
-
+# Edit Vehicle Page
 @app.route("/user-home/vehicles/<vehicle_id>/edit", methods=["GET", "UPDATE"])
 @login_required
 def edit_vehicle(vehicle_id):
@@ -129,7 +129,7 @@ def edit_vehicle(vehicle_id):
 
     return render_template("vehicle_edit.html", edit_vehicle=edit_vehicle, vehicle=vehicle)
 
-
+# Submit Vehicle Edit
 @app.route("/user-home/vehicles/<vehicle_id>/edit/submit", methods=["GET", "POST"])
 @login_required
 def submit_edit_vehicle(vehicle_id):
@@ -151,14 +151,14 @@ def submit_edit_vehicle(vehicle_id):
 
     return redirect(f"/user-home/vehicles/{vehicle_id}")
 
-
+# Show Vehicle Details Page
 @app.route("/user-home/vehicles/<vehicle_id>")
 @login_required
 def vehicle_details(vehicle_id):
     vehicle = Vehicle.query.get(vehicle_id)
     return render_template("vehicle_details.html", vehicle_id=vehicle_id, vehicle=vehicle)
 
-
+# Delete A Vehicle
 @app.route("/user-home/vehicles/<vehicle_id>/delete")
 @login_required
 def delete_vehicle(vehicle_id):
@@ -180,9 +180,7 @@ def delete_vehicle(vehicle_id):
     return redirect("/user-home")
 
 
-
-
-# Service Endpoints
+# ----- Service Endpoints ------
 
 @app.route("/user-home/services/<service_id>")
 @login_required
@@ -190,6 +188,53 @@ def service_details(service_id):
     service = Service.query.get(service_id)
     
     return render_template("service_details.html", service_id=service_id, service=service)
+
+
+@app.route("/user-home/vehicles/<vehicle_id>/add-service")
+@login_required
+def new_service_form(vehicle_id):
+    vehicle = Vehicle.query.get(vehicle_id)
+    new_service = AddService()
+    return render_template("service_new.html", new_service=new_service, vehicle=vehicle)
+
+@app.route("/user-home/vehicles/<vehicle_id>/add-service/submit", methods=["GET", "POST"])
+@login_required
+def create_new_service(vehicle_id):
+
+    new_service = AddService()
+    vehicle = Vehicle.query.get(vehicle_id)
+
+    vehicle_id = vehicle_id
+    service_name = new_service.service_name.data
+    service_period = new_service.service_period.data
+    period_count = new_service.period_count.data
+    period_units = vehicle.use_unit
+    service_notes = new_service.service_notes.data
+
+    service = crud.create_service(vehicle_id, service_name, service_period, period_count, period_units, service_notes)
+
+    db.session.add(service)
+    db.session.commit()
+
+    flash(f"Service: - {service_name} - has been added to your {vehicle.year} {vehicle.make} {vehicle.model}.")
+
+    return redirect(f"/user-home/vehicles/{vehicle_id}")
+
+
+
+
+# @app.route("/user-home/services/<service_id>/edit")
+# @login_required
+# def edit_service(service_id):
+#     service = Service.query.get(service_id)
+#     edit_service = 
+
+# @app.route("/user-home/services/<service_id>/complete")
+# @login_required
+
+# @app.route("/user-home/services/<service_id>/delete")
+# @login_required
+
 
 
 if __name__ == "__main__":

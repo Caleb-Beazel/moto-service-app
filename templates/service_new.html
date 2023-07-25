@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+{% block title %}Add a Service{% endblock %}
+
+{% block body %}
+<div class="w-50">
+    <h1>Add Service</h1>
+    <form action="{{ url_for('create_new_service', vehicle_id = vehicle.vehicle_id) }}" method="POST">
+        {{ new_service.csrf_token() }}
+        {{ new_service.service_name.label(class="form-label") }} 
+        {{ new_service.service_name(class="form-control") }}
+        {{ new_service.service_period.label(class="form-label") }} 
+        {{ new_service.service_period(class="form-control") }}
+        {{ new_service.period_count.label(class="form-label") }} 
+        {{ new_service.period_count(class="form-control") }}
+        {{ new_service.service_notes.label(class="form-label") }} 
+        {{ new_service.service_notes(class="form-control") }}        
+        {{ new_service.submit(class="btn btn-primary mt-3 form-button") }}
+    </form>
+</div>
+{% endblock %}

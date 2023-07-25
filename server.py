@@ -135,13 +135,21 @@ def edit_vehicle(vehicle_id):
 def submit_edit_vehicle(vehicle_id):
     vehicle_to_update = Vehicle.query.get(vehicle_id)
     vehicle_updates = EditVehicle()
+    vehicle_services = Service.query.filter_by(vehicle_id=vehicle_id).all()
+
+    use_val_diff = vehicle_updates.use_val.data - vehicle_to_update.use_val
 
     vehicle_to_update.vin = vehicle_updates.vin.data
     vehicle_to_update.make = vehicle_updates.make.data
     vehicle_to_update.model = vehicle_updates.model.data
     vehicle_to_update.year = vehicle_updates.year.data
+    vehicle_to_update.use_val = vehicle_updates.use_val.data
+    vehicle_to_update.use_unit = vehicle_updates.use_unit.data
     vehicle_to_update.vehicle_notes = vehicle_updates.vehicle_notes.data
     vehicle_to_update.vehicle_image_link = vehicle_updates.vehicle_image_link.data
+
+    for service in vehicle_services:
+        service.period_count += use_val_diff
 
     db.session.commit()
 
@@ -230,7 +238,7 @@ def edit_service(service_id):
 
     return render_template("service_edit.html", edit_service=edit_service, service=service)
 
-
+# Submit Edited Service
 @app.route("/user-home/vehicles/services/<service_id>/edit/submit", methods=["GET", "POST"])
 @login_required
 def submit_edit_service(service_id):
@@ -251,10 +259,22 @@ def submit_edit_service(service_id):
 # @app.route("/user-home/services/<service_id>/complete")
 # @login_required
 
-# @app.route("/user-home/services/<service_id>/delete")
-# @login_required
+@app.route("/user-home/services/<service_id>/delete")
+@login_required
+def delete_service(service_id):
+    service = Service.query.get(service_id)
+    occurences = Occurence.query.filter(Occurence.service_id == service.service_id).all()
+        
+    for occurence in occurences:
+        db.session.delete(occurence)
+    
+    db.session.delete(service)
 
+    db.session.commit()
 
+    flash(f"{service.service_name} and it's associated occurences have been deleted.")
+
+    return redirect(f"/user-home/vehicles/{service.vehicle_id}")
 
 if __name__ == "__main__":
     connect_to_db(app)

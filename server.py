@@ -157,12 +157,16 @@ def submit_edit_vehicle(vehicle_id):
 
     return redirect(f"/user-home/vehicles/{vehicle_id}")
 
-# Show Vehicle Details Page
+# Vehicle Details Page / Vehicle Services
 @app.route("/user-home/vehicles/<vehicle_id>")
 @login_required
 def vehicle_details(vehicle_id):
     vehicle = Vehicle.query.get(vehicle_id)
-    return render_template("vehicle_details.html", vehicle_id=vehicle_id, vehicle=vehicle)
+    all_services = Service.query.filter_by(vehicle_id=vehicle_id).all()
+    
+    services = sorted(all_services, key = lambda x: (x.period_count / x.service_period), reverse=True)
+    
+    return render_template("vehicle_details.html", vehicle_id=vehicle_id, vehicle=vehicle, services=services)
 
 # Delete A Vehicle
 @app.route("/user-home/vehicles/<vehicle_id>/delete")
@@ -188,13 +192,14 @@ def delete_vehicle(vehicle_id):
 
 # ----- Service Endpoints ------
 
-# Service Details
+# Service Details / Display Occurences
 @app.route("/user-home/services/<service_id>")
 @login_required
 def service_details(service_id):
     service = Service.query.get(service_id)
+    occurences = Occurence.query.filter_by(service_id=service_id).all()
     
-    return render_template("service_details.html", service_id=service_id, service=service)
+    return render_template("service_details.html", service_id=service_id, service=service, occurences=occurences)
 
 # Add a Service to Vehicle
 @app.route("/user-home/vehicles/<vehicle_id>/add-service")
@@ -256,7 +261,7 @@ def submit_edit_service(service_id):
     flash(f"{service_to_update.service_name} has been updated.")
     return redirect(f"/user-home/services/{service_id}")
 
-
+# Delete Service
 @app.route("/user-home/services/<service_id>/delete")
 @login_required
 def delete_service(service_id):
@@ -275,7 +280,6 @@ def delete_service(service_id):
     return redirect(f"/user-home/vehicles/{service.vehicle_id}")
 
 
-
 # ------ Occurence Endpoints -------
 
 # Add Occurence Page
@@ -286,6 +290,8 @@ def new_occurence_form(service_id):
     new_occurence = AddOccurence()
     return render_template("occurence_new.html",service=service, new_occurence=new_occurence)
 
+
+# Submit Occurence
 @app.route("/user-home/services/<service_id>/complete/submit", methods=["GET", "POST"])
 @login_required
 def create_new_occurence(service_id):
@@ -293,7 +299,6 @@ def create_new_occurence(service_id):
     vehicle = Vehicle.query.get(service.vehicle_id)
     new_occurence = AddOccurence()
     
-
     use_at_service = vehicle.use_val
     use_unit_at_service = vehicle.use_unit 
     date_of_service = new_occurence.date_of_service.data
@@ -309,6 +314,7 @@ def create_new_occurence(service_id):
     flash(f"{service.service_name} serviced for: {vehicle.year} {vehicle.make} {vehicle.model}.")
     
     return redirect(f"/user-home/services/{service_id}")
+
 
 
 if __name__ == "__main__":

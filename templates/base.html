@@ -4,6 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width">
     
+    <link rel="stylesheet" href="{{url_for('static', filename='reset.css')}}">
     <link rel="stylesheet" href="{{url_for('static', filename='styles.css')}}">
     <title>
       {% block title %}{% endblock %}
@@ -13,14 +14,14 @@
   </head>
   <body>
     <header>
-        <!-- <nav>
+        <nav>
             <button class="nav-buttons">
-                <a href="">Vehicles</a>
+                <a href="/user-home">Home</a>
               </button>
               <button class="nav-buttons">
-                <a href="">Services</a>
+                <a href="/logout">Log Out</a>
               </button>
-        </nav> -->
+        </nav>
     </header>
 
     {% for msg in get_flashed_messages() %}

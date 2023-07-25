@@ -25,4 +25,21 @@
 <a href="/user-home/vehicles/{{vehicle_id}}/delete">
     <button class="btn btn-primary mt-3 form-button">Delete Vehicle</button>
 </a>
+
+
+<div class="services-by-vehicle">
+    {% for service in services %}
+    <div class="service-card">
+        <a href="user-home/services/{{service.service_id}} " id="service-link">
+            <p id="service-link"> <strong>{{ service.service_name }}</strong> </p>
+        </a>
+        <p> For: {{ service.vehicle.year }} {{ service.vehicle.make }} {{ service.vehicle.model }}  </p>
+        <p>Service Interval: {{ service.service_period }} {{ service.period_units }} </p>
+        <p>Since Last Service: {{ service.period_count }} {{service.period_units}} </p>
+        <br>
+        <br>        
+    </div>
+    {% endfor %}
+</div>
+
 {% endblock %}

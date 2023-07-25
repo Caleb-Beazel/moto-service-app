@@ -1,6 +1,10 @@
 * {
     background-color: rgb(22, 22, 22);
 }
+
+.flash-msg{
+    color: azure;
+}
 h1, h2, h3, h4, h5{
     color: greenyellow;
 }
@@ -10,6 +14,9 @@ h1, h2, h3, h4, h5{
 }
 .form-button{
     color: greenyellow;
+}
+.form-control{
+    color: azure;
 }
 .vehicle-card{
     display: flex;
@@ -72,4 +79,8 @@ h1, h2, h3, h4, h5{
     color: azure;
     padding-left: 50px;
     padding-top: 25px;
+}
+
+.occurence-table{
+    color: azure;
 }

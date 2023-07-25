@@ -11,16 +11,40 @@
 </div>
 
 
-<a href="/user-home/vehicles/services/{{service_id}}/edit">
-    <button class="btn btn-primary mt-3 form-button">Edit Service</button>
-</a>
 
-<a href="/user-home/services/{{service_id}}/complete">
-    <button class="btn btn-primary mt-3 form-button">Vehicle Serviced</button>
-</a>
+<div class="button-div">
+    <a href="/user-home/vehicles/services/{{service_id}}/edit">
+        <button class="btn btn-primary mt-3 form-button">Edit Service</button>
+    </a>
+    
+    <a href="/user-home/services/{{service_id}}/complete">
+        <button class="btn btn-primary mt-3 form-button">Vehicle Serviced</button>
+    </a>
+    
+    <a href="/user-home/services/{{service_id}}/delete">
+        <button class="btn btn-primary mt-3 form-button">Delete Reoccuring Service</button>
+    </a>
+</div>
 
-<a href="/user-home/services/{{service_id}}/delete">
-    <button class="btn btn-primary mt-3 form-button">Delete Reoccuring Service</button>
-</a>
+<h3>Past Services</h3>
+
+<table class="occurence-table">
+    <thead>
+        <tr>
+            <th>Date of Service</th>
+            <th>Use at Service</th>
+            <th>Notes</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for occurence in occurences %}
+        <tr>
+            <td>{{occurence.date_of_service}}</td>
+            <td>{{occurence.use_at_service}} {{occurence.use_unit_at_service}}</td>
+            <td>{{occurence.occurence_notes}}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
 
 {% endblock %}

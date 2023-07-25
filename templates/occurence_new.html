@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% block title %}Add an Occurence{% endblock %}
+
+{% block body %}
+<div class="w-50">
+    <h1>Add Service Occurence For: {{service.service_name}} </h1>
+    <form action="{{ url_for('create_new_occurence', service_id = service.service_id) }}" method="POST">
+        {{ new_occurence.csrf_token() }}
+        {{ new_occurence.date_of_service.label(class="form-label") }} 
+        {{ new_occurence.date_of_service(class="form-control") }}
+        {{ new_occurence.occurence_notes.label(class="form-label") }} 
+        {{ new_occurence.occurence_notes(class="form-control") }}
+        {{ new_occurence.submit(class="btn btn-primary mt-3 form-button") }}
+    </form>
+</div>
+{% endblock %}

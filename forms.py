@@ -1,5 +1,6 @@
 from flask_wtf import FlaskForm
-from wtforms import PasswordField, StringField, validators, IntegerField, SubmitField, SelectField, TextAreaField
+from wtforms import PasswordField, StringField, validators, IntegerField, SubmitField, SelectField, TextAreaField, DateField
+from model import date
 
 
 class LoginForm(FlaskForm):
@@ -49,3 +50,9 @@ class EditService(FlaskForm):
     period_count = IntegerField('Since Last Service: ', [validators.InputRequired()])
     service_notes = TextAreaField('Notes: ')
     submit = SubmitField("Update Service")
+
+class AddOccurence(FlaskForm):
+    date_of_service = DateField("Date of Service: ")
+    occurence_notes = TextAreaField("Notes: ")
+    submit = SubmitField("Complete Service")
+    

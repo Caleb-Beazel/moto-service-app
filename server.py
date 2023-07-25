@@ -3,7 +3,7 @@ from model import connect_to_db, db, User, Vehicle, Service, Occurence
 from jinja2 import StrictUndefined
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import LoginManager, login_required, UserMixin, login_manager,login_user, logout_user, current_user
-from forms import LoginForm, CreateAccount, AddVehicle, EditVehicle, AddService, EditService
+from forms import LoginForm, CreateAccount, AddVehicle, EditVehicle, AddService, EditService, AddOccurence
 import crud
 
 
@@ -121,7 +121,7 @@ def create_new_vehicle():
     
 
 # Edit Vehicle Page
-@app.route("/user-home/vehicles/<vehicle_id>/edit", methods=["GET", "UPDATE"])
+@app.route("/user-home/vehicles/<vehicle_id>/edit")
 @login_required
 def edit_vehicle(vehicle_id):
     vehicle = Vehicle.query.get(vehicle_id)
@@ -256,8 +256,6 @@ def submit_edit_service(service_id):
     flash(f"{service_to_update.service_name} has been updated.")
     return redirect(f"/user-home/services/{service_id}")
 
-# @app.route("/user-home/services/<service_id>/complete")
-# @login_required
 
 @app.route("/user-home/services/<service_id>/delete")
 @login_required
@@ -275,6 +273,43 @@ def delete_service(service_id):
     flash(f"{service.service_name} and it's associated occurences have been deleted.")
 
     return redirect(f"/user-home/vehicles/{service.vehicle_id}")
+
+
+
+# ------ Occurence Endpoints -------
+
+# Add Occurence Page
+@app.route("/user-home/services/<service_id>/complete")
+@login_required
+def new_occurence_form(service_id):
+    service = Service.query.get(service_id)
+    new_occurence = AddOccurence()
+    return render_template("occurence_new.html",service=service, new_occurence=new_occurence)
+
+@app.route("/user-home/services/<service_id>/complete/submit", methods=["GET", "POST"])
+@login_required
+def create_new_occurence(service_id):
+    service = Service.query.get(service_id)
+    vehicle = Vehicle.query.get(service.vehicle_id)
+    new_occurence = AddOccurence()
+    
+
+    use_at_service = vehicle.use_val
+    use_unit_at_service = vehicle.use_unit 
+    date_of_service = new_occurence.date_of_service.data
+    occurence_notes = new_occurence.occurence_notes.data
+
+    service.period_count = 0
+
+    occurence = crud.create_occurence(service_id, use_at_service, use_unit_at_service, date_of_service, occurence_notes)
+
+    db.session.add(occurence)
+    db.session.commit()
+
+    flash(f"{service.service_name} serviced for: {vehicle.year} {vehicle.make} {vehicle.model}.")
+    
+    return redirect(f"/user-home/services/{service_id}")
+
 
 if __name__ == "__main__":
     connect_to_db(app)

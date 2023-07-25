@@ -1,6 +1,6 @@
 import os
 from flask_sqlalchemy import SQLAlchemy
-from datetime import datetime, date
+from datetime import date
 from flask_login import UserMixin
 
 db = SQLAlchemy()

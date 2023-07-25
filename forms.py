@@ -42,3 +42,10 @@ class AddService(FlaskForm):
     period_count = IntegerField('Since Last Service: ', [validators.InputRequired()])
     service_notes = TextAreaField('Notes: ')
     submit = SubmitField("Add Service")
+
+class EditService(FlaskForm):
+    service_name = StringField('Name of Service: ', [validators.InputRequired()])
+    service_period = IntegerField('Service Period: ', [validators.InputRequired()])
+    period_count = IntegerField('Since Last Service: ', [validators.InputRequired()])
+    service_notes = TextAreaField('Notes: ')
+    submit = SubmitField("Update Service")

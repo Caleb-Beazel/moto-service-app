@@ -3,7 +3,7 @@ from model import connect_to_db, db, User, Vehicle, Service, Occurence
 from jinja2 import StrictUndefined
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import LoginManager, login_required, UserMixin, login_manager,login_user, logout_user, current_user
-from forms import LoginForm, CreateAccount, AddVehicle, EditVehicle, AddService
+from forms import LoginForm, CreateAccount, AddVehicle, EditVehicle, AddService, EditService
 import crud
 
 
@@ -140,8 +140,6 @@ def submit_edit_vehicle(vehicle_id):
     vehicle_to_update.make = vehicle_updates.make.data
     vehicle_to_update.model = vehicle_updates.model.data
     vehicle_to_update.year = vehicle_updates.year.data
-    vehicle_to_update.use_val = vehicle_updates.use_val.data
-    vehicle_to_update.use_unit = vehicle_updates.use_unit.data
     vehicle_to_update.vehicle_notes = vehicle_updates.vehicle_notes.data
     vehicle_to_update.vehicle_image_link = vehicle_updates.vehicle_image_link.data
 
@@ -182,6 +180,7 @@ def delete_vehicle(vehicle_id):
 
 # ----- Service Endpoints ------
 
+# Service Details
 @app.route("/user-home/services/<service_id>")
 @login_required
 def service_details(service_id):
@@ -189,7 +188,7 @@ def service_details(service_id):
     
     return render_template("service_details.html", service_id=service_id, service=service)
 
-
+# Add a Service to Vehicle
 @app.route("/user-home/vehicles/<vehicle_id>/add-service")
 @login_required
 def new_service_form(vehicle_id):
@@ -197,6 +196,7 @@ def new_service_form(vehicle_id):
     new_service = AddService()
     return render_template("service_new.html", new_service=new_service, vehicle=vehicle)
 
+# Submit Add New Service
 @app.route("/user-home/vehicles/<vehicle_id>/add-service/submit", methods=["GET", "POST"])
 @login_required
 def create_new_service(vehicle_id):
@@ -221,13 +221,32 @@ def create_new_service(vehicle_id):
     return redirect(f"/user-home/vehicles/{vehicle_id}")
 
 
+# Edit Existing Service
+@app.route("/user-home/vehicles/services/<service_id>/edit")
+@login_required
+def edit_service(service_id):
+    service = Service.query.get(service_id)
+    edit_service = EditService(obj=service)
+
+    return render_template("service_edit.html", edit_service=edit_service, service=service)
 
 
-# @app.route("/user-home/services/<service_id>/edit")
-# @login_required
-# def edit_service(service_id):
-#     service = Service.query.get(service_id)
-#     edit_service = 
+@app.route("/user-home/vehicles/services/<service_id>/edit/submit", methods=["GET", "POST"])
+@login_required
+def submit_edit_service(service_id):
+
+    service_to_update = Service.query.get(service_id)
+    service_updates = EditService()
+
+    service_to_update.service_name = service_updates.service_name.data
+    service_to_update.service_period = service_updates.service_period.data
+    service_to_update.period_count = service_updates.period_count.data
+    service_to_update.service_notes = service_updates.service_notes.data
+
+    db.session.commit()
+
+    flash(f"{service_to_update.service_name} has been updated.")
+    return redirect(f"/user-home/services/{service_id}")
 
 # @app.route("/user-home/services/<service_id>/complete")
 # @login_required

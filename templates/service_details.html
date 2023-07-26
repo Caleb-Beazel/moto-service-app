@@ -32,16 +32,24 @@
     <thead>
         <tr>
             <th>Date of Service</th>
+            <br>
             <th>Use at Service</th>
             <th>Notes</th>
+            <th>Delete</th>
         </tr>
     </thead>
     <tbody>
         {% for occurence in occurences %}
         <tr>
-            <td>{{occurence.date_of_service}}</td>
+            <td>{{occurence.date_of_service.strftime("%m / %d / %Y")}}</td>
             <td>{{occurence.use_at_service}} {{occurence.use_unit_at_service}}</td>
             <td>{{occurence.occurence_notes}}</td>
+            </td>
+            <a href="/user-home/services/occurences/{{occurence.occurence_id}}/delete">
+                <button class="btn btn-primary mt-3 form-button" >Delete</button>
+            </a>
+            <td>
+                
         </tr>
         {% endfor %}
     </tbody>

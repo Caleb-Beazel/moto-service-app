@@ -5,7 +5,7 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import LoginManager, login_required, UserMixin, login_manager,login_user, logout_user, current_user
 from forms import LoginForm, CreateAccount, AddVehicle, EditVehicle, AddService, EditService, AddOccurence
 import crud
-
+from datetime import datetime
 
 app = Flask(__name__)
 app.secret_key = "dev"
@@ -81,7 +81,7 @@ def user_home():
 
     user_services = Service.query.join(Vehicle).filter(Vehicle.user_id == current_user.user_id).all()
 
-    sorted_user_services = sorted(user_services, key = lambda x: (x.period_count / x.service_period), reverse=True)
+    sorted_user_services = sorted(user_services, key = lambda x: (x.period_count - x.service_period), reverse=True)
 
     return render_template("user_home.html", user_services=sorted_user_services)
 
@@ -164,8 +164,8 @@ def vehicle_details(vehicle_id):
     vehicle = Vehicle.query.get(vehicle_id)
     all_services = Service.query.filter_by(vehicle_id=vehicle_id).all()
     
-    services = sorted(all_services, key = lambda x: (x.period_count / x.service_period), reverse=True)
-    
+    services = sorted(all_services, key = lambda x: (x.period_count - x.service_period), reverse=True)
+
     return render_template("vehicle_details.html", vehicle_id=vehicle_id, vehicle=vehicle, services=services)
 
 # Delete A Vehicle
@@ -282,7 +282,7 @@ def delete_service(service_id):
 
 # ------ Occurence Endpoints -------
 
-# Add Occurence Page
+# Add Occurence
 @app.route("/user-home/services/<service_id>/complete")
 @login_required
 def new_occurence_form(service_id):
@@ -315,7 +315,18 @@ def create_new_occurence(service_id):
     
     return redirect(f"/user-home/services/{service_id}")
 
+# Delete Occurence
+@app.route("/user-home/services/occurences/<occurence_id>/delete")
+@login_required
+def delete_occurence(occurence_id):
+    occurence = Occurence.query.get(occurence_id)
 
+    db.session.delete(occurence)
+    db.session.commit()
+
+    flash(f"Occurence was deleted.")
+    
+    return redirect(f"/user-home/services/{occurence.service_id}")
 
 if __name__ == "__main__":
     connect_to_db(app)

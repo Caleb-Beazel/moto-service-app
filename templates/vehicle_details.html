@@ -30,7 +30,7 @@
 <div class="services-by-vehicle">
     {% for service in services %}
     <div class="service-card">
-        <a href="user-home/services/{{service.service_id}} " id="service-link">
+        <a href= "/user-home/services/{{ service.service_id }}" id="service-link">
             <p id="service-link"> <strong>{{ service.service_name }}</strong> </p>
         </a>
         <p> For: {{ service.vehicle.year }} {{ service.vehicle.make }} {{ service.vehicle.model }}  </p>

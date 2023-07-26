@@ -1,36 +1,106 @@
-* {
+/* Base CSS */
+
+@font-face {
+    font-family: 'hemi-head';
+    src: url('./fonts/hemi\ head\ bd\ it.otf');
+}
+
+body {
     background-color: rgb(22, 22, 22);
+    display: flex;
+    flex-direction: column;
 }
 
 .flash-msg{
+    display: flex;
     color: azure;
+    font-family: hemi-head;
 }
-h1, h2, h3, h4, h5{
+h1, h2, h4, h5{
     color: greenyellow;
+    margin-left: 8px;
+    margin-top: 5px;
+    font-family: hemi-head;
+}
+h3{
+    color: rgb(123, 123, 123);
+    font-size: 70px;
+    margin-left: 25px;
+}
+h6{
+    margin-bottom: 25px;
+    margin-left: 3px;
 }
 
 .form-label{
-    color: rgb(0, 221, 255);
+    color: rgb(123, 123, 123);
 }
 .form-button{
-    color: greenyellow;
+    color: rgb(123, 123, 123);
+    /* background-color: black; */
+
 }
 .form-control{
-    color: azure;
+    color: rgb(123, 123, 123);
 }
+
+.nav-buttons{
+    position: fixed;
+    top: 8px;
+    right: 10px;
+    text-decoration: none;
+    background-color:rgb(53, 53, 53);
+    border: none;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+#home{
+    right: 98px;
+}
+
+.a-tag-clean{
+    text-decoration: none;
+    color: rgb(123, 123, 123);
+    
+}
+
+/* Login Page */
+
+.w-50{
+    margin-left: 25px;
+}
+
+
+/* Vehicle CSS */
+
+#vehicle-row{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    background-color: rgb(38, 38, 38);
+    border-top: solid rgb(80, 80, 80) 1px;
+    border-bottom: solid rgb(51, 51, 51) 1px;
+    align-items: center;
+}
+
 .vehicle-card{
     display: flex;
     flex-direction: column;
     padding-top: 25px;
-    border: solid rgb(0, 221, 255) 1px;
-    color: rgb(0, 221, 255);
+    border: solid rgb(0, 255, 225) 1px;
+    /* color: rgb(0, 255, 225); */
+    color: rgb(207, 207, 207);
     background-color: rgb(0, 0, 0);
     width: 250px;
+    height: 345px;
     align-items: center;
     justify-content: center;
     margin: 20px;
     text-decoration: none;
-    
+    box-shadow: 3px 3px 5px black;
 }
 
 .vehicle-card-image{
@@ -41,6 +111,11 @@ h1, h2, h3, h4, h5{
     display: flex;
     align-items: center;
     align-content: center;
+}
+
+.add-vehicle-a{
+    text-decoration: none;
+    color: rgb(123, 123, 123);
 }
 
 .vehicle-details{
@@ -58,21 +133,28 @@ h1, h2, h3, h4, h5{
     width: 500px;
 }
 
-#vehicle-row{
+
+/* Service CSS */
+
+#service-row{
     display: flex;
     flex-direction: row;
-    background-color: rgb(38, 38, 38);
 }
 
 .service-card{
-    color: azure;
-    border: solid white 1px;
+    color: rgb(123, 123, 123);
+    border: solid rgb(149, 149, 149) 1px;
     width: 250px;
-    justify-content: center;
+    height: 180px;
+    padding: 10px;
+    margin-left: 15px;
+    margin-bottom: 25px;
+    margin-top: 15px;
 }
+
 #service-link{
-    text-decoration: none;
-    color: azure;
+    text-decoration: underline;
+    color: rgb(149, 148, 148);
 }
 
 .service-details{
@@ -80,6 +162,7 @@ h1, h2, h3, h4, h5{
     padding-left: 50px;
     padding-top: 25px;
 }
+/* Occurence CSS */
 
 .occurence-table{
     color: azure;

@@ -81,13 +81,13 @@ with server.app.app_context():
 
     occurences_to_database = []
     for occurence in occurence_data:
-        service_id, use_at_service, use_unit_at_service, date_of_service, occurence_notes = (
+        service_id, use_at_service, use_unit_at_service, occurence_notes = (
             occurence["service_id"],
             occurence["use_at_service"],
             occurence["use_unit_at_service"],
-            occurence["date_of_service"],
             occurence["occurence_notes"]
         )
+        date_of_service = datetime.strptime(occurence["date_of_service"], "%Y-%m-%d")
 
         db_occurence = crud.create_occurence(service_id, use_at_service, use_unit_at_service, date_of_service, occurence_notes)
 

@@ -2,10 +2,13 @@
 {% block title %}{{ vehicle.year }} {{ vehicle.make }} {{ vehicle.model }}{% endblock %}
 
 {% block body %}
+<h1 id="vehicle-title"> {{ vehicle.year }} {{ vehicle.make }} {{ vehicle.model }} </h1>
 <div id="v-d-organizer">
+    <div id="vehicle-img-div">
+        <img src=" {{vehicle.vehicle_image_link}} " class="vehicle-details-image">
+    </div>
     <div class="vehicle-details">
     
-            <img src=" {{vehicle.vehicle_image_link}} " class="vehicle-details-image">
             <p>Make: {{ vehicle.make }} </p>
             <p>Model: {{ vehicle.model }} </p>
             <p>Year: {{ vehicle.year }} </p>
@@ -13,33 +16,38 @@
             <p>Total Use: {{ vehicle.use_val }} {{ vehicle.use_unit }}</p>
             <p>Notes: {{ vehicle.vehicle_notes }} </p>
     </div>
-</div>
-
-<a href="/user-home/vehicles/{{vehicle_id}}/edit">
-    <button class="btn btn-primary mt-3 form-button">Edit Vehicle</button>
-</a>
-<a href="/user-home/vehicles/{{vehicle_id}}/add-service">
-    <button class="btn btn-primary mt-3 form-button">Add a Service</button>
-</a>
-
-<a href="/user-home/vehicles/{{vehicle_id}}/delete">
-    <button class="btn btn-primary mt-3 form-button">Delete Vehicle</button>
-</a>
-
-
-<div class="services-by-vehicle">
-    {% for service in services %}
-    <div class="service-card">
-        <a href= "/user-home/services/{{ service.service_id }}" id="service-link">
-            <p id="service-link"> <strong>{{ service.service_name }}</strong> </p>
+    <div class="vehicle-buttons-group">
+        <a href="/user-home/vehicles/{{vehicle_id}}/edit">
+            <button class="btn btn-dark mt-3 form-button" id="vehicle-buttons">Edit Vehicle</button>
         </a>
-        <p> For: {{ service.vehicle.year }} {{ service.vehicle.make }} {{ service.vehicle.model }}  </p>
-        <p>Service Interval: {{ service.service_period }} {{ service.period_units }} </p>
-        <p>Since Last Service: {{ service.period_count }} {{service.period_units}} </p>
-        <br>
-        <br>        
+        
+        <a href="/user-home/vehicles/{{vehicle_id}}/delete">
+            <button class="btn btn-dark mt-3 form-button" id="vehicle-buttons">Delete Vehicle</button>
+        </a>
     </div>
-    {% endfor %}
 </div>
-
-{% endblock %}
+<h3 id="vehicle-services-title">Services</h3>
+    <div class="services-by-vehicle">
+        {% for service in services %}
+        <div class="service-card">
+            <a href= "/user-home/services/{{ service.service_id }}" id="service-link">
+                <p id="service-link"> <strong>{{ service.service_name }}</strong> </p>
+            </a>
+            <p> For: {{ service.vehicle.year }} {{ service.vehicle.make }} {{ service.vehicle.model }}  </p>
+            <p>Service Interval: {{ service.service_period }} {{ service.period_units }} </p>
+            <p>Since Last Service: {{ service.period_count }} {{service.period_units}} </p>
+            <br>
+            <br>        
+        </div>
+        {% endfor %}
+        <div class="add-service-details">
+            <a href="/user-home/vehicles/{{vehicle_id}}/add-service" class="add-vehicle-a">
+                <h3> + </h3>
+                <h6>Add Service</h6>
+            </a>
+        </div>
+    </div>
+    
+    
+    {% endblock %}
+    <button class="add-vehicle-a btn btn-dark mt-3 form-button" id="vehicle-buttons">Add a Service</button>

@@ -8,13 +8,15 @@
     <div id="vehicle-row">
     {% for vehicle in current_user.vehicles %}
     <div class="vehicle-card">
-        <a href="user-home/vehicles/{{vehicle.vehicle_id}}">
-            <img src=" {{vehicle.vehicle_image_link}} " class="vehicle-card-image">
-        </a>
-            <p>Make: {{ vehicle.make }} </p>
-            <p>Model: {{ vehicle.model }} </p>
-            <p>Year: {{ vehicle.year }} </p>
-            <p>Use: {{vehicle.use_val}} {{vehicle.use_unit}} </p>
+        <div class="vehicle-img-div">
+            <a href="user-home/vehicles/{{vehicle.vehicle_id}}">
+                <img src=" {{vehicle.vehicle_image_link}} " class="vehicle-card-image">
+            </a>
+        </div>
+            <p id="v-c-text">Make: {{ vehicle.make }} </p>
+            <p id="v-c-text">Model: {{ vehicle.model }} </p>
+            <p id="v-c-text">Year: {{ vehicle.year }} </p>
+            <p id="v-c-text">Use: {{vehicle.use_val}} {{vehicle.use_unit}} </p>
     </div>
         <br>
         <br>

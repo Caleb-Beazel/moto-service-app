@@ -16,17 +16,20 @@ body {
     color: azure;
     font-family: hemi-head;
 }
+
 h1, h2, h4, h5{
     color: greenyellow;
     margin-left: 8px;
     margin-top: 5px;
     font-family: hemi-head;
 }
+
 h3{
     color: rgb(123, 123, 123);
     font-size: 70px;
     margin-left: 25px;
 }
+
 h6{
     margin-bottom: 25px;
     margin-left: 3px;
@@ -35,11 +38,13 @@ h6{
 .form-label{
     color: rgb(123, 123, 123);
 }
+
 .form-button{
     color: rgb(123, 123, 123);
     /* background-color: black; */
 
 }
+
 .form-control{
     color: rgb(123, 123, 123);
 }
@@ -73,7 +78,6 @@ h6{
     margin-left: 25px;
 }
 
-
 /* Vehicles User Home */
 #vehicle-row{
     display: flex;
@@ -83,12 +87,12 @@ h6{
     border-top: solid rgb(80, 80, 80) 1px;
     border-bottom: solid rgb(51, 51, 51) 1px;
     align-items: center;
+    flex-wrap: wrap;
 }
 
 .vehicle-card{
     display: flex;
     flex-direction: column;
-    padding-top: 25px;
     border: solid rgb(0, 255, 225) 1px;
     /* color: rgb(0, 255, 225); */
     color: rgb(207, 207, 207);
@@ -102,8 +106,15 @@ h6{
     box-shadow: 3px 3px 5px black;
 }
 
+.vehicle-img-div{
+    width: 200px;
+    height: 140px;
+    overflow: hidden;
+}
+
 .vehicle-card-image{
     width: 200px;
+    height: auto;
 
 }
 
@@ -112,12 +123,20 @@ h6{
     color: rgb(123, 123, 123);
 }
 
+#v-c-text{
+    margin-top: 7px;
+    margin-bottom: 0px;
+    align-items: center;
+    justify-content: center;
+    justify-items: center;
+}
+
 /* Vehicles Details Page */
 
 #vehicle-title{
     padding-left: 30px;
     margin-left: 0px;
-    margin-top: 55px;
+    margin-top: 47px;
     margin-bottom: 0px;
     border-top: solid rgb(0, 255, 225) 3px;
     border-bottom: solid rgb(0, 255, 225) 3px;
@@ -150,6 +169,7 @@ h6{
     margin: 10px;
     margin-top: 30px;
     margin-left: 20px;
+    margin-bottom: 20px;
     text-decoration: none;
 }
 
@@ -170,23 +190,23 @@ h6{
     margin-top: 8px;
 }
 
-.services-by-vehicle{
+#services-by-vehicle{
     margin-top: 0px;
     display: flex;
     flex-direction: row;
-    justify-items: center;
-    align-items: center;
+    flex-wrap: wrap;
 }
 
 .add-service-details{
-    align-items: center;
+    padding-left: 30px ;
 }
 
-/* Service CSS */
+/* Service User Home */
 
 #service-row{
     display: flex;
     flex-direction: row;
+    flex-wrap: wrap;
 }
 
 .service-card{
@@ -197,23 +217,51 @@ h6{
     padding: 10px;
     margin-left: 15px;
     margin-bottom: 25px;
-    margin-top: 15px;
-    justify-content: center;
-    align-items: center;
+    margin-top: 10px;
 }
 
 #service-link{
     text-decoration: underline;
-    color: rgb(149, 148, 148);
+    color: rgb(148, 148, 148);
 }
 
 .service-details{
-    color: azure;
+    color: rgb(175, 175, 175);
     padding-left: 50px;
     padding-top: 25px;
 }
-/* Occurence CSS */
+
+/* Service Details Page */
+
+#service-details-name{
+    padding-left: 30px;
+    margin-left: 0px;
+    margin-top: 47px;
+    margin-bottom: 0px;
+    border-top: solid rgb(0, 255, 225) 3px;
+    border-bottom: solid rgb(0, 255, 225) 3px;
+}
+
+.button-div{
+    padding-left: 15px;
+    padding-bottom: 15px;
+    border-bottom: solid rgb(33, 33, 33) 2px;
+}
+.button-spacing-serv{
+    margin-right: 5px;
+}
 
 .occurence-table{
-    color: azure;
+    color: rgb(175, 175, 175);
+    margin-left: 30px;
+    margin-top: 15px;
+    
+}
+
+#x{
+    margin-bottom: 20px;
+}
+
+#add-line{
+    border-top: solid rgb(33, 33, 33) 2px;
 }

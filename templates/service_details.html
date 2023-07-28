@@ -2,8 +2,9 @@
 {% block title %}{{service.service_name}} - {{ service.vehicle.year }} {{ service.vehicle.make }} {{ service.vehicle.model }}{% endblock %}
 
 {% block body %}
+<h1 id="service-details-name"> {{ service.service_name }} </h1>
 <div class="service-details">
-    <p><strong>{{ service.service_name }}</strong></p>
+    <p>Service: {{ service.service_name }}</p>
     <p> For: {{ service.vehicle.year }} {{ service.vehicle.make }} {{ service.vehicle.model }}  </p>
     <p>Service Interval: {{ service.service_period }} {{ service.period_units }} </p>
     <p>Since Last Service: {{ service.period_count }} {{service.period_units}} </p>
@@ -13,29 +14,27 @@
 
 
 <div class="button-div">
-    <a href="/user-home/vehicles/services/{{service_id}}/edit">
-        <button class="btn btn-primary mt-3 form-button">Edit Service</button>
+    <a href="/user-home/vehicles/services/{{service_id}}/edit" class="a-tag-clean">
+        <button class="btn btn-dark mt-3 form-button button-spacing-serv">Edit Service</button>
     </a>
-    
-    <a href="/user-home/services/{{service_id}}/complete">
-        <button class="btn btn-primary mt-3 form-button">Vehicle Serviced</button>
+    <a href="/user-home/services/{{service_id}}/complete" class="a-tag-clean">
+        <button class="btn btn-dark mt-3 form-button button-spacing-serv">Vehicle Serviced</button>
     </a>
-    
-    <a href="/user-home/services/{{service_id}}/delete">
-        <button class="btn btn-primary mt-3 form-button">Delete Reoccuring Service</button>
+    <a href="/user-home/services/{{service_id}}/delete" class="a-tag-clean">
+        <button class="btn btn-dark mt-3 form-button button-spacing-serv">Delete Reoccuring Service</button>
     </a>
 </div>
 
-<h3>Past Services</h3>
+<h3 id="vehicle-services-title">Past Services</h3>
 
 <table class="occurence-table">
     <thead>
         <tr>
             <th>Date of Service</th>
-            <br>
             <th>Use at Service</th>
             <th>Notes</th>
             <th>Delete</th>
+            
         </tr>
     </thead>
     <tbody>
@@ -44,15 +43,17 @@
             <td>{{occurence.date_of_service.strftime("%m / %d / %Y")}}</td>
             <td>{{occurence.use_at_service}} {{occurence.use_unit_at_service}}</td>
             <td>{{occurence.occurence_notes}}</td>
-            </td>
-            <a href="/user-home/services/occurences/{{occurence.occurence_id}}/delete">
-                <button class="btn btn-primary mt-3 form-button" >Delete</button>
-            </a>
             <td>
+                <a href="/user-home/services/occurences/{{occurence.occurence_id}}/delete" class="a-tag-clean">
+                    <button class="btn btn-dark mt-3 form-button" id="x" >X</button>
+                </a>
+            </td>
+            
                 
         </tr>
         {% endfor %}
     </tbody>
 </table>
+<div id="add-line"></div>
 
 {% endblock %}

@@ -3,10 +3,10 @@
 
 {% block body %}
 <h1 id="vehicle-title"> {{ vehicle.year }} {{ vehicle.make }} {{ vehicle.model }} </h1>
-<div id="v-d-organizer">
-    <div id="vehicle-img-div">
-        <img src=" {{vehicle.vehicle_image_link}} " class="vehicle-details-image">
-    </div>
+    <div id="v-d-organizer">
+        <div>
+            <img src=" {{vehicle.vehicle_image_link}} " class="vehicle-details-image">
+        </div>
     <div class="vehicle-details">
     
             <p>Make: {{ vehicle.make }} </p>
@@ -27,7 +27,7 @@
     </div>
 </div>
 <h3 id="vehicle-services-title">Services</h3>
-    <div class="services-by-vehicle">
+    <div id="services-by-vehicle">
         {% for service in services %}
         <div class="service-card">
             <a href= "/user-home/services/{{ service.service_id }}" id="service-link">
@@ -37,8 +37,8 @@
             <p>Service Interval: {{ service.service_period }} {{ service.period_units }} </p>
             <p>Since Last Service: {{ service.period_count }} {{service.period_units}} </p>
             <br>
-            <br>        
-        </div>
+            <br> 
+        </div>       
         {% endfor %}
         <div class="add-service-details">
             <a href="/user-home/vehicles/{{vehicle_id}}/add-service" class="add-vehicle-a">
